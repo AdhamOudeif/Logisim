@@ -1,0 +1,68 @@
+.ORIG   x3000
+
+
+
+            AND     R2, R2, #0 
+
+            LD      R3, FILE    
+
+COUNT      
+            LDR    R0, R3, #0 
+
+            BRZ     END_COUNT   
+
+            ADD     R3, R3, #1 
+
+            ADD     R2, R2, #1 
+
+            BRNZP   COUNT      
+
+END_COUNT   
+
+            ADD     R4, R2, #0 
+            BRZ     SORTED     
+
+
+
+OUTERLOOP   
+
+            ADD     R4, R4, #-1 
+
+            BRNZ    SORTED     
+
+            ADD     R5, R4, #0 
+
+            LD      R3, FILE    
+
+INNERLOOP  
+            LDR     R0, R3, #0
+
+            LDR     R1, R3, #1 
+
+            NOT     R2, R1      
+
+            ADD     R2, R2, #1 
+            ADD     R2, R0, R2 
+            BRNZ    SWAPPED     
+
+            STR     R1, R3, #0 
+
+            STR     R0, R3, #1 
+
+SWAPPED    
+
+            ADD     R3, R3, #1 
+
+            ADD     R5, R5, #-1 
+
+            BRP     INNERLOOP 
+
+            BRNZP   OUTERLOOP  
+SORTED      
+
+            HALT
+
+FILE        .FILL   x3500 
+
+
+            .END
